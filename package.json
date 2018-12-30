@@ -1,0 +1,25 @@
+{
+  "name": "api_baltaio",
+  "version": "1.0.0",
+  "description": "API da série de vídeos do Balta.io disponível em: https://www.youtube.com/playlist?list=PLHlHvK2lnJndvvycjBqQAbgEDqXxKLoqn",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucianoHAS/api_baltaio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LucianoHAS/api_baltaio/issues"
+  },
+  "homepage": "https://github.com/LucianoHAS/api_baltaio#readme",
+  "dependencies": {
+    "debug": "^4.1.1",
+    "express": "^4.16.4",
+    "http": "0.0.0"
+  }
+}

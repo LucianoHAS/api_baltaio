@@ -2,8 +2,9 @@
   "name": "api_baltaio",
   "version": "1.0.0",
   "description": "API da série de vídeos do Balta.io disponível em: https://www.youtube.com/playlist?list=PLHlHvK2lnJndvvycjBqQAbgEDqXxKLoqn",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "start": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

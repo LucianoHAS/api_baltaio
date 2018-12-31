@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 // Controolers
-const controller = require('../controllers/products-controllers');
+const controller = require('../controllers/productController');
 
 
 // Rotas para CRUD de produtos

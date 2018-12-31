@@ -5,8 +5,8 @@ const app = express();
 
 
 // Carregamento das rotas
-const indexRoutes = require('./routes/index');
-const productsRoutes = require('./routes/products');
+const indexRoutes = require('./routes/index-routes');
+const productsRoutes = require('./routes/products-routes');
 
 
 // Configuração

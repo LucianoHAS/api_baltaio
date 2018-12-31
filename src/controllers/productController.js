@@ -2,6 +2,30 @@
 
 const Product = require('../models/product');
 
+exports.get = async (req, res, next) => {
+    try {
+        const products = await Product.find(
+            {
+                active: true
+            },
+            {
+                '_id': 0,
+                'title': 1,
+                'price': 1,
+                'slug': 1
+            }
+        );
+
+        res.status(200).send(products);
+
+    } catch (err) {
+        res.status(400).send({
+            error: "Erro ao buscar lista de produtos cadastrados",
+            data: err
+        });
+    };
+}
+
 exports.post = async (req, res, next) => {
     try {
         await Product.create(req.body);

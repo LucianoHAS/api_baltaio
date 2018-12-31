@@ -67,6 +67,33 @@ exports.getById = async (req, res) => {
     };
 };
 
+exports.getByTag = async (req, res) => {
+    try {
+        const products = await Product.find(
+            {
+                active: true,
+                tags: req.params.tag,
+            },
+            {
+                '_id': 0,
+                'title': 1,
+                'description': 1,
+                'price': 1,
+                'slug': 1,
+                'tags': 1
+            }
+        );
+
+        res.status(200).send(products);
+
+    } catch (err) {
+        res.status(400).send({
+            error: "Erro ao buscar lista de produtos cadastrados",
+            data: err
+        });
+    };
+};
+
 exports.post = async (req, res) => {
     try {
         await Product.create(req.body);

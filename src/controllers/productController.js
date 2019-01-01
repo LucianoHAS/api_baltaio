@@ -1,6 +1,7 @@
 'use strict';
 
 const Product = require('../models/product');
+const ValidationContract = require('../validators/validator');
 
 exports.get = async (req, res) => {
     try {
@@ -95,6 +96,18 @@ exports.getByTag = async (req, res) => {
 };
 
 exports.post = async (req, res) => {
+    let contract = new ValidationContract();
+
+    const { title, slug, description } = req.body;
+
+    contract.hasMinLen(title, 3, 'O título deve conter ao menos três caracteres');
+    contract.hasMinLen(slug, 3, 'O slug deve conter ao menos três caracteres');
+    contract.hasMinLen(description, 3, 'A descrição deve conter ao menos três caracteres');
+
+    //Se contiver dados invalidos
+    if (!contract.isValid())
+        return res.status(400).send(contract.errors()).end();
+
     try {
         await Product.create(req.body);
         res.status(201).send({ message: 'Produto cadastrado com sucesso' });
@@ -148,7 +161,7 @@ exports.delete = async (req, res) => {
 
     } catch (err) {
         res.status(400).send({
-            error: "Erro ao deletar o produto",
+            error: "Erro ao remover o produto",
             data: err
         });
     };

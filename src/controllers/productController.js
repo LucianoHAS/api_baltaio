@@ -108,12 +108,34 @@ exports.post = async (req, res) => {
     };
 };
 
-exports.put = (req, res) => {
-    const id = req.params.id;
-    res.status(200).send({
-        id: id,
-        item: req.body
-    });
+exports.put = async (req, res) => {
+    try {
+        const { title, description, price, slug } = req.body
+
+        const product = await Product.findByIdAndUpdate(
+            req.params.id,
+            {
+                title,
+                description,
+                price,
+                slug
+            },
+            {
+                new: true
+            }
+        );
+
+        res.status(200).send({
+            message: 'Produto atualizado com sucesso',
+            new: product
+        })
+
+    } catch (err) {
+        res.status(400).send({
+            error: "Erro ao atualizar o produto",
+            data: err
+        });
+    };
 };
 
 exports.delete = (req, res) => {

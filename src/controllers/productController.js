@@ -138,10 +138,18 @@ exports.put = async (req, res) => {
     };
 };
 
-exports.delete = (req, res) => {
-    const id = req.params.id;
-    res.status(200).send({
-        id: id,
-        item: req.body
-    });
+exports.delete = async (req, res) => {
+    try {
+        await Product.findOneAndRemove(req.params.id)
+
+        res.status(200).send({
+            message: "Produto removido com sucesso"
+        })
+
+    } catch (err) {
+        res.status(400).send({
+            error: "Erro ao deletar o produto",
+            data: err
+        });
+    };
 };

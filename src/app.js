@@ -15,7 +15,7 @@ mongoose.Promise = global.Promise;
 
 // Carregamento das rotas
 const indexRoutes = require('./routes/indexRoute');
-const productsRoutes = require('./routes/productRoute');
+const productRoutes = require('./routes/productRoute');
 
 
 // Configuração
@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Rotas
 app.use('/', indexRoutes);
-app.use('/products', productsRoutes);
+app.use('/products', productRoutes);
 
 
 module.exports = app;

@@ -2,20 +2,13 @@
 
 const Product = require('../models/product');
 const ValidationContract = require('../validators/validator');
+const productRepository = require('../repositories/productRepository');
+
+
 
 exports.get = async (req, res) => {
     try {
-        const products = await Product.find(
-            {
-                active: true
-            },
-            {
-                '_id': 0,
-                'title': 1,
-                'price': 1,
-                'slug': 1
-            }
-        );
+        const products = await productRepository.get();
 
         res.status(200).send(products);
 
@@ -27,22 +20,11 @@ exports.get = async (req, res) => {
     };
 };
 
+
+
 exports.getBySlug = async (req, res) => {
     try {
-        const product = await Product.findOne(
-            {
-                active: true,
-                slug: req.params.slug
-            },
-            {
-                '_id': 0,
-                'title': 1,
-                'description': 1,
-                'price': 1,
-                'slug': 1,
-                'tags': 1
-            }
-        );
+        const product = await productRepository.getBySlug(req.params.slug)
 
         res.status(200).send(product);
 
@@ -54,9 +36,11 @@ exports.getBySlug = async (req, res) => {
     };
 };
 
+
+
 exports.getById = async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id);
+        const product = await productRepository.getById(req.params.id);
 
         res.status(200).send(product);
 
@@ -68,22 +52,11 @@ exports.getById = async (req, res) => {
     };
 };
 
+
+
 exports.getByTag = async (req, res) => {
     try {
-        const products = await Product.find(
-            {
-                active: true,
-                tags: req.params.tag,
-            },
-            {
-                '_id': 0,
-                'title': 1,
-                'description': 1,
-                'price': 1,
-                'slug': 1,
-                'tags': 1
-            }
-        );
+        const products = await productRepository.getByTag(req.params.tag);
 
         res.status(200).send(products);
 
@@ -94,6 +67,8 @@ exports.getByTag = async (req, res) => {
         });
     };
 };
+
+
 
 exports.post = async (req, res) => {
     let contract = new ValidationContract();
@@ -109,7 +84,7 @@ exports.post = async (req, res) => {
         return res.status(400).send(contract.errors()).end();
 
     try {
-        await Product.create(req.body);
+        await productRepository.create(req.body);
         res.status(201).send({ message: 'Produto cadastrado com sucesso' });
 
     } catch (err) {
@@ -121,27 +96,16 @@ exports.post = async (req, res) => {
     };
 };
 
+
+
 exports.put = async (req, res) => {
     try {
-        const { title, description, price, slug } = req.body
-
-        const product = await Product.findByIdAndUpdate(
-            req.params.id,
-            {
-                title,
-                description,
-                price,
-                slug
-            },
-            {
-                new: true
-            }
-        );
+        const product = await productRepository.update(req.body);
 
         res.status(200).send({
             message: 'Produto atualizado com sucesso',
             new: product
-        })
+        });
 
     } catch (err) {
         res.status(400).send({
@@ -151,9 +115,11 @@ exports.put = async (req, res) => {
     };
 };
 
+
+
 exports.delete = async (req, res) => {
     try {
-        await Product.findOneAndRemove(req.params.id)
+        await productRepository.delete(req.body)
 
         res.status(200).send({
             message: "Produto removido com sucesso"
